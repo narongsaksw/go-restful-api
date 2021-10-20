@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/sscarry2/ginapi/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -21,5 +22,11 @@ func ConnectDB() {
 	}
 
 	fmt.Println("connect DB successfully!")
+
+	//migration
+	// db.Migrator().DropTable(&models.User{})
+	db.AutoMigrate(&models.User{})
+
+
 	DB = db
 }
