@@ -17,7 +17,7 @@ func ConnectDB() {
 	if err != nil {
 		fmt.Println("connect DB failed!")
 		fmt.Println(err.Error())
-		return
+		panic(err)
 	}
 
 	fmt.Println("connect DB successfully!")
