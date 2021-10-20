@@ -11,4 +11,10 @@ func InitUserRoute(rg *gin.RouterGroup) {
 	routerGroup.GET("/", usercontroller.GetAllUsers)
 
 	routerGroup.POST("/register", usercontroller.Register)
+
+	routerGroup.POST("/login", usercontroller.Login)
+
+	routerGroup.GET("/:id", usercontroller.GetUserById)
+
+	routerGroup.GET("/search", usercontroller.SearchUserByFullname)
 }
