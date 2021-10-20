@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/sscarry2/ginapi/configs"
 	"github.com/sscarry2/ginapi/routes"
 )
 
@@ -24,6 +25,10 @@ func main() {
 }
 
 func setupRouter() *gin.Engine {
+	//connect DB
+	configs.ConnectDB()
+
+	
 	router := gin.Default()
 
 	apiV1 := router.Group("/api/v1")
