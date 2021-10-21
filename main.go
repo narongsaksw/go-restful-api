@@ -25,6 +25,9 @@ func main() {
 }
 
 func setupRouter() *gin.Engine {
+	//load .env
+	godotenv.Load(".env")
+
 	//connect DB
 	configs.ConnectDB()
 
