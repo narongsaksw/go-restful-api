@@ -8,13 +8,13 @@ import (
 )
 
 type User struct {
-	ID			uint		`gorm:"primaryKey;autoIncrement;not null"`
-	Fullname 	string		`gorm:"type:varchar(255);not null"`
-	Email		string		`gorm:"type:varchar(255);not null;unique"`
-	Password	string		`gorm:"type:varchar(255);not null"`
-	IsAdmin		bool		`gorm:"type:bool;default:false"`
-	CreatedAt   time.Time
-  	UpdatedAt   time.Time
+	ID			uint		`json:"id" gorm:"primaryKey;autoIncrement;not null"`
+	Fullname 	string		`json:"fullName" gorm:"type:varchar(255);not null"`
+	Email		string		`json:"email" gorm:"type:varchar(255);not null;unique"`
+	Password	string		`json:"-" gorm:"type:varchar(255);not null"`
+	IsAdmin		bool		`json:"isAdmin" gorm:"type:bool;default:false"`
+	CreatedAt   time.Time	`json:"createdAt"`
+  	UpdatedAt   time.Time	`json:"updatedAt"`
 }
 
 

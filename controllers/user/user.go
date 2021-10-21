@@ -6,11 +6,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sscarry2/ginapi/configs"
 	"github.com/sscarry2/ginapi/models"
+	"github.com/sscarry2/ginapi/utils"
 )
 
 func GetAllUsers(c *gin.Context) {
+	var users []models.User
+	configs.DB.Find(&users)
 	c.JSON(200, gin.H{
-		"data" : "users", 
+		"data" : users, 
 	})
 }
 
@@ -24,6 +27,13 @@ func Register(c *gin.Context) {
 		Fullname: input.Fullname,
 		Email: input.Email,
 		Password: input.Password,
+	}
+
+	//check duplicate email
+	userExist := configs.DB.Where("email = ?", input.Email).First(&user)
+	if userExist.RowsAffected == 1 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "duplicate email",})
+		return
 	}
 
 	result := configs.DB.Create(&user)
@@ -47,14 +57,30 @@ func Login(c *gin.Context) {
 
 func GetUserById(c *gin.Context) {
 	id := c.Param("id")
+
+	var user models.User
+	result := configs.DB.First(&user, id)
+	if result.RowsAffected < 1 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "user not found.",})
+		return
+	}
 	c.JSON(200, gin.H{
-		"data": id,
+		"data": user,
 	})
 }
 
 func SearchUserByFullname(c *gin.Context) {
 	fullname := c.Query("fullname")
+
+	var users []models.User
+	result := configs.DB.Where("fullname LIKE ?", "%"+fullname+"%").Scopes(utils.Paginate(c)).Find(&users)
+
+	if result.RowsAffected < 1 {
+		c.JSON(http.StatusNotFound, gin.H{"error": "user not found.",})
+		return
+	}
+
 	c.JSON(200, gin.H{
-		"data": fullname,
+		"data": users,
 	})
 }
