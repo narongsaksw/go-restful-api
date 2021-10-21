@@ -13,6 +13,7 @@ type User struct {
 	Email		string		`json:"email" gorm:"type:varchar(255);not null;unique"`
 	Password	string		`json:"-" gorm:"type:varchar(255);not null"`
 	IsAdmin		bool		`json:"isAdmin" gorm:"type:bool;default:false"`
+	Blogs		[]Blog		`json:"blogs"`
 	CreatedAt   time.Time	`json:"createdAt"`
   	UpdatedAt   time.Time	`json:"updatedAt"`
 }
