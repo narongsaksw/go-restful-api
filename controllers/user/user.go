@@ -102,7 +102,7 @@ func GetUserById(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "user not found.",})
 		return
 	}
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"data": user,
 	})
 }
@@ -118,7 +118,15 @@ func SearchUserByFullname(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"data": users,
+	})
+}
+
+func GetUserProfile(c *gin.Context) {
+	user := c.MustGet("user")
+
+	c.JSON(http.StatusOK, gin.H{
+		"data": user,
 	})
 }
